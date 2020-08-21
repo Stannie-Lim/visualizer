@@ -1,11 +1,8 @@
+const express = require("express");
+const app = express();
 const path = require("path");
 const db = require("./db/db");
-const morgan = require("morgan");
-const express = require("express");
-const socketio = require("socket.io");
-const app = express();
 
-app.use(morgan("dev"));
 app.use(express.json());
 
 const staticFolder = path.join(__dirname, "..", "..", "static");
@@ -29,7 +26,5 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 3000;
 
 db.sync().then(() => {
-  const server = app.listen(port);
-  const io = socketio(server);
-  require("./socket")(io);
+  app.listen(port);
 });
