@@ -1,8 +1,11 @@
-const express = require("express");
-const app = express();
 const path = require("path");
 const db = require("./db/db");
+const express = require("express");
+const volleyball = require("volleyball");
+const socketio = require("socket.io");
+const app = express();
 
+app.use(volleyball);
 app.use(express.json());
 
 const staticFolder = path.join(__dirname, "..", "..", "static");
@@ -26,5 +29,7 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 3000;
 
 db.sync().then(() => {
-  app.listen(port);
+  const server = app.listen(port);
+  const io = socketio(server);
+  require("./socket")(io);
 });
