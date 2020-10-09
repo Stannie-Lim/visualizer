@@ -1,8 +1,6 @@
 const path = require("path");
 const express = require("express");
 const volleyball = require("volleyball");
-const socketio = require("socket.io");
-// const db = require("./db/db");
 const app = express();
 
 app.use(volleyball);
@@ -17,9 +15,6 @@ app.get("/", (req, res, next) => {
   res.sendFile(path.join(staticFolder, "index.html"));
 });
 
-// api routes
-app.use("/api", require("./api"));
-
 // error middleware
 app.use((err, req, res, next) => {
   console.error(err);
@@ -28,8 +23,4 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
-// db.sync().then(() => {
 const server = app.listen(port);
-const io = socketio(server);
-require("./socket")(io);
-// });
