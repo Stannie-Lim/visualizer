@@ -3,13 +3,22 @@ import { HashRouter, Route } from "react-router-dom";
 
 // components
 import Board from "./components/Board";
+import Controls from "./components/Controls";
+
+// algorithms
+import BFS from "./algorithms/BFS";
+
+const STARTPOINT = [1, 1];
+const ENDPOINT = [3, 3];
 
 const makeArray = (size) => {
   const newBoard = [];
   for (let i = 0; i < size; i++) {
     const arr = [];
     for (let j = 0; j < size; j++) {
-      arr.push("white");
+      if (i === STARTPOINT[0] && j === STARTPOINT[1]) arr.push("black");
+      else if (i === ENDPOINT[0] && j === ENDPOINT[1]) arr.push("blue");
+      else arr.push("white");
     }
     newBoard.push(arr);
   }
@@ -17,7 +26,9 @@ const makeArray = (size) => {
 };
 
 const App = () => {
-  const [board, setBoard] = useState(makeArray(40));
+  const [board, setBoard] = useState(makeArray(5));
+  const [start, setStart] = useState(STARTPOINT);
+  const [end, setEnd] = useState(ENDPOINT);
 
   const makeWall = (row, col) => {
     const newArray = [...board];
@@ -29,6 +40,13 @@ const App = () => {
 
   return (
     <div className="main">
+      <Controls
+        BFS={BFS}
+        start={start}
+        end={end}
+        board={board}
+        setBoard={setBoard}
+      />
       <Board board={board} makeWall={makeWall} />
     </div>
   );
