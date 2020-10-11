@@ -8,99 +8,101 @@ const getAdjacents = (board, row, col) => {
   const neighbors = [];
   if (
     checkWithinBounds(board, row - 1, col - 1) &&
-    board[row - 1][col - 1] !== "lightblue" &&
-    board[row - 1][col - 1] !== "black"
+    !board[row - 1][col - 1].visited &&
+    !board[row - 1][col - 1].isWall
   ) {
-    neighbors.push([row - 1, col - 1]);
+    neighbors.push(board[row - 1][col - 1]);
   }
   if (
     checkWithinBounds(board, row - 1, col) &&
-    board[row - 1][col] !== "lightblue" &&
-    board[row - 1][col] !== "black"
+    !board[row - 1][col].visited &&
+    !board[row - 1][col].isWall
   ) {
-    neighbors.push([row - 1, col]);
+    neighbors.push(board[row - 1][col]);
   }
   if (
     checkWithinBounds(board, row - 1, col + 1) &&
-    board[row - 1][col + 1] !== "lightblue" &&
-    board[row - 1][col + 1] !== "black"
+    !board[row - 1][col + 1].visited &&
+    !board[row - 1][col + 1].isWall
   ) {
-    neighbors.push([row - 1, col + 1]);
+    neighbors.push(board[row - 1][col + 1]);
   }
   if (
     checkWithinBounds(board, row, col + 1) &&
-    board[row][col + 1] !== "lightblue" &&
-    board[row][col + 1] !== "black"
+    !board[row][col + 1].visited &&
+    !board[row][col + 1].isWall
   ) {
-    neighbors.push([row, col + 1]);
+    neighbors.push(board[row][col + 1]);
   }
   if (
     checkWithinBounds(board, row + 1, col + 1) &&
-    board[row + 1][col + 1] !== "lightblue" &&
-    board[row + 1][col + 1] !== "black"
+    !board[row + 1][col + 1].visited &&
+    !board[row + 1][col + 1].isWall
   ) {
-    neighbors.push([row + 1, col + 1]);
+    neighbors.push(board[row + 1][col + 1]);
   }
   if (
     checkWithinBounds(board, row + 1, col) &&
-    board[row + 1][col] !== "lightblue" &&
-    board[row + 1][col] !== "black"
+    !board[row + 1][col].visited &&
+    !board[row + 1][col].isWall
   ) {
-    neighbors.push([row + 1, col]);
+    neighbors.push(board[row + 1][col]);
   }
   if (
     checkWithinBounds(board, row + 1, col - 1) &&
-    board[row + 1][col - 1] !== "lightblue" &&
-    board[row + 1][col - 1] !== "black"
+    !board[row + 1][col - 1].visited &&
+    !board[row + 1][col - 1].isWall
   ) {
-    neighbors.push([row + 1, col - 1]);
+    neighbors.push(board[row + 1][col - 1]);
   }
   if (
     checkWithinBounds(board, row, col - 1) &&
-    board[row][col - 1] !== "lightblue" &&
-    board[row][col - 1] !== "black"
+    !board[row][col - 1].visited &&
+    !board[row][col - 1].isWall
   ) {
-    neighbors.push([row, col - 1]);
+    neighbors.push(board[row][col - 1]);
   }
   return neighbors;
 };
 
-const BFS = (board, setBoard, start, end) => {
+const BFS = (_board, setBoard, start) => {
+  const board = [..._board];
   const path = [];
 
-  const queue = [start];
+  const startingNode = board[start[0]][start[1]];
+  const queue = [startingNode];
+
   while (queue.length) {
-    const { length } = queue;
-    const update = [];
-    for (let i = 0; i < length; i++) {
-      const [row, col] = queue.shift();
+    const node = queue.shift();
+    const { row, col, isEnd, isWall, visited } = node;
+    if (visited) continue;
 
-      update.push([row, col]);
-      if (i === length - 1) {
-        const newBoard = [...board];
-        for (const [_row, _col] of update) {
-          if (
-            (_row !== start[0] || _col !== start[1]) &&
-            (_row !== end[0] || _col !== end[1])
-          )
-            newBoard[_row][_col] = "lightblue";
-        }
-        setBoard(newBoard);
+    path.push(node);
+    board[row][col].visited = true;
+    if (isEnd) break;
 
-        for (const [_row, _col] of update) {
-          if (_row === end[0] && _col === end[1]) {
-            console.log(path);
-            console.log(`found at ${_row} ${_col}`);
-            return;
-          }
-        }
-      }
-
-      const neighbors = getAdjacents(board, row, col);
-      for (const [neighborRow, neighborCol] of neighbors) {
-        queue.push([neighborRow, neighborCol]);
-      }
+    const neighbors = getAdjacents(board, row, col);
+    for (const neighbor of neighbors) {
+      queue.push(neighbor);
     }
+  }
+
+  animate(_board, setBoard, path);
+};
+
+const animate = (board, setBoard, order) => {
+  for (let i = 0; i < order.length; i++) {
+    setTimeout(() => {
+      const node = order[i];
+      console.log(node);
+      const newBoard = [...board];
+      const newNode = {
+        ...node,
+        isVisited: true,
+      };
+      newBoard[node.row][node.col] = newNode;
+      setBoard(newBoard);
+    }, 50 * i);
   }
 };
 

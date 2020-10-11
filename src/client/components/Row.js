@@ -1,14 +1,21 @@
 import React from "react";
 
-const Row = ({ colors, rowIndex, makeWall }) => {
+// components
+import Node from "./Node";
+
+const Row = ({ row, makeWall }) => {
   return (
     <div className="row">
-      {colors.map((color, colIndex) => (
-        <div
-          className="cell"
-          key={colIndex}
-          style={{ backgroundColor: color }}
-          onClick={() => makeWall(rowIndex, colIndex)}
+      {row.map(({ row, col, isStart, isEnd, isWall, isVisited }) => (
+        <Node
+          row={row}
+          col={col}
+          isStart={isStart}
+          isEnd={isEnd}
+          makeWall={makeWall}
+          isWall={isWall}
+          isVisited={isVisited}
+          key={`${row} ${col}`}
         />
       ))}
     </div>

@@ -9,16 +9,22 @@ import Controls from "./components/Controls";
 import BFS from "./algorithms/BFS";
 
 const STARTPOINT = [1, 1];
-const ENDPOINT = [3, 3];
+const ENDPOINT = [2, 4];
 
-const makeArray = (size) => {
+const makeArray = (rSize, cSize) => {
   const newBoard = [];
-  for (let i = 0; i < size; i++) {
+  for (let row = 0; row < rSize; row++) {
     const arr = [];
-    for (let j = 0; j < size; j++) {
-      if (i === STARTPOINT[0] && j === STARTPOINT[1]) arr.push("black");
-      else if (i === ENDPOINT[0] && j === ENDPOINT[1]) arr.push("blue");
-      else arr.push("white");
+    for (let col = 0; col < cSize; col++) {
+      const node = {
+        row,
+        col,
+        isStart: row === STARTPOINT[0] && col === STARTPOINT[1],
+        isEnd: row === ENDPOINT[0] && col === ENDPOINT[1],
+        isWall: false,
+        isVisited: false,
+      };
+      arr.push(node);
     }
     newBoard.push(arr);
   }
@@ -26,15 +32,15 @@ const makeArray = (size) => {
 };
 
 const App = () => {
-  const [board, setBoard] = useState(makeArray(5));
+  const [board, setBoard] = useState(makeArray(5, 20));
   const [start, setStart] = useState(STARTPOINT);
   const [end, setEnd] = useState(ENDPOINT);
 
   const makeWall = (row, col) => {
     const newArray = [...board];
-    newArray[row][col] === "white"
-      ? (newArray[row][col] = "lightseagreen")
-      : (newArray[row][col] = "white");
+    newArray[row][col].isWall
+      ? (newArray[row][col].isWall = false)
+      : (newArray[row][col].isWall = true);
     setBoard(newArray);
   };
 
