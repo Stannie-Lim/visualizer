@@ -9,6 +9,7 @@ const Controls = ({
   setBoard,
   randomWalls,
   setError,
+  clear,
 }) => {
   const callBFS = () => {
     try {
@@ -30,7 +31,8 @@ const Controls = ({
     <div className="controls">
       <button onClick={callBFS}>BFS</button>
       <button onClick={callDFS}>DFS</button>
-      <button onClick={() => randomWalls()}>Randomize Board</button>
+      <button onClick={randomWalls}>Randomize Board</button>
+      <button onClick={clear}>Clear</button>
     </div>
   );
 };

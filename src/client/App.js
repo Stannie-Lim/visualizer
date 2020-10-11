@@ -60,6 +60,10 @@ const App = () => {
     setBoard(_board);
   };
 
+  const clear = () => {
+    setBoard(makeArray(15, 50));
+  };
+
   return (
     <div className="main">
       <div className="top">
@@ -70,6 +74,7 @@ const App = () => {
           end={end}
           board={board}
           randomWalls={randomWalls}
+          clear={clear}
           setBoard={setBoard}
           setError={setError}
         />

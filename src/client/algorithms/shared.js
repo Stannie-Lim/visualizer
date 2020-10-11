@@ -73,6 +73,9 @@ const animate = (board, setBoard, order, time) => {
       time ? 75 * (i + time) : 75 * i
     );
   }
+
+  if (order.length === 0 || !order[order.length - 1].isEnd)
+    throw "No valid path";
 };
 
 export { getAdjacents, getShortestPath, animate };
