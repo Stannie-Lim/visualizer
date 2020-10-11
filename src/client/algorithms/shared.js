@@ -70,7 +70,7 @@ const animate = (board, setBoard, order, time) => {
         newBoard[node.row][node.col] = newNode;
         setBoard(newBoard);
       },
-      time ? 100 * (i + time) : 100 * i
+      time ? 75 * (i + time) : 75 * i
     );
   }
 };

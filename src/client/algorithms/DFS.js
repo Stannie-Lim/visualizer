@@ -3,10 +3,11 @@ import { getAdjacents, getShortestPath, animate } from "./shared";
 const dfs = (board, setBoard, start, end) => {
   const path = getPath(board, start);
   animate(board, setBoard, path);
-
   const endingNode = board[end[0]][end[1]];
   const shortestPath = getShortestPath(endingNode);
   animate(board, setBoard, shortestPath, path.length);
+
+  if (path.length === 0 || !path[path.length - 1].isEnd) throw "No valid path";
 };
 
 const getPath = (_board, start) => {

@@ -41,5 +41,16 @@ body {
   background-color: yellow;
 }
 
+.top {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  background-color: lightseagreen;
+  width: 100vw;
+  margin: 0;
+}
+
 .controls {
 }

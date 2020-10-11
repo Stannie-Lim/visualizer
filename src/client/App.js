@@ -10,7 +10,7 @@ import BFS from "./algorithms/BFS";
 import DFS from "./algorithms/DFS";
 
 const STARTPOINT = [1, 1];
-const ENDPOINT = [14, 3];
+const ENDPOINT = [13, 1];
 
 const makeArray = (rSize, cSize) => {
   const newBoard = [];
@@ -37,6 +37,7 @@ const App = () => {
   const [board, setBoard] = useState(makeArray(15, 50));
   const [start, setStart] = useState(STARTPOINT);
   const [end, setEnd] = useState(ENDPOINT);
+  const [error, setError] = useState("");
 
   const makeWall = (row, col) => {
     const newArray = [...board];
@@ -61,15 +62,19 @@ const App = () => {
 
   return (
     <div className="main">
-      <Controls
-        BFS={BFS}
-        DFS={DFS}
-        start={start}
-        end={end}
-        board={board}
-        randomWalls={randomWalls}
-        setBoard={setBoard}
-      />
+      <div className="top">
+        <Controls
+          BFS={BFS}
+          DFS={DFS}
+          start={start}
+          end={end}
+          board={board}
+          randomWalls={randomWalls}
+          setBoard={setBoard}
+          setError={setError}
+        />
+        <h1 className="error">{error}</h1>
+      </div>
       <Board board={board} makeWall={makeWall} />
     </div>
   );
