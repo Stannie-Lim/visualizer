@@ -7,9 +7,10 @@ import Controls from "./components/Controls";
 
 // algorithms
 import BFS from "./algorithms/BFS";
+import DFS from "./algorithms/DFS";
 
 const STARTPOINT = [1, 1];
-const ENDPOINT = [5, 7];
+const ENDPOINT = [14, 3];
 
 const makeArray = (rSize, cSize) => {
   const newBoard = [];
@@ -62,6 +63,7 @@ const App = () => {
     <div className="main">
       <Controls
         BFS={BFS}
+        DFS={DFS}
         start={start}
         end={end}
         board={board}

@@ -1,6 +1,6 @@
 import { getAdjacents, getShortestPath, animate } from "./shared";
 
-const bfs = (board, setBoard, start, end) => {
+const dfs = (board, setBoard, start, end) => {
   const path = getPath(board, start);
   animate(board, setBoard, path);
 
@@ -18,7 +18,7 @@ const getPath = (_board, start) => {
   const queue = [startingNode];
 
   while (queue.length) {
-    const node = queue.shift();
+    const node = queue.pop();
     const { row, col, isEnd, isWall, visited } = node;
     if (visited || isWall) continue;
 
@@ -36,4 +36,4 @@ const getPath = (_board, start) => {
   return path;
 };
 
-export default bfs;
+export default dfs;
