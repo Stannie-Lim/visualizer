@@ -37,7 +37,16 @@ const getAdjacents = (board, row, col) => {
   return neighbors;
 };
 
-const BFS = (_board, setBoard, start, end) => {
+const bfs = (board, setBoard, start, end) => {
+  const path = getPath(board, setBoard, start, end);
+  animate(board, setBoard, path);
+
+  const endingNode = board[end[0]][end[1]];
+  const shortestPath = getShortestPath(endingNode);
+  animateShortestPath(board, setBoard, shortestPath, path.length);
+};
+
+const getPath = (_board, setBoard, start, end) => {
   const board = [..._board];
   const path = [];
 
@@ -61,10 +70,7 @@ const BFS = (_board, setBoard, start, end) => {
     }
   }
 
-  const endingNode = board[end[0]][end[1]];
-  const shortestPath = getShortestPath(endingNode);
-  animate(_board, setBoard, path);
-  animateShortestPath(board, setBoard, shortestPath, path.length);
+  return path;
 };
 
 const getShortestPath = (endingNode) => {
@@ -109,4 +115,4 @@ const animate = (board, setBoard, order) => {
   }
 };
 
-export default BFS;
+export default bfs;
