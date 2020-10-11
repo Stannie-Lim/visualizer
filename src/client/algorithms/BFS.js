@@ -1,8 +1,44 @@
-function checkWithinBounds(board, row, col) {
+const bfs = (board, setBoard, start, end) => {
+  const path = getPath(board, start);
+  animate(board, setBoard, path);
+
+  const endingNode = board[end[0]][end[1]];
+  const shortestPath = getShortestPath(endingNode);
+  animate(board, setBoard, shortestPath, path.length);
+};
+
+const getPath = (_board, start) => {
+  const board = [..._board];
+  const path = [];
+
+  const startingNode = board[start[0]][start[1]];
+
+  const queue = [startingNode];
+
+  while (queue.length) {
+    const node = queue.shift();
+    const { row, col, isEnd, isWall, visited } = node;
+    if (visited || isWall) continue;
+
+    path.push(node);
+    board[row][col].visited = true;
+    if (isEnd) break;
+
+    const neighbors = getAdjacents(board, row, col);
+    for (const neighbor of neighbors) {
+      neighbor.previous = node;
+      queue.push(neighbor);
+    }
+  }
+
+  return path;
+};
+
+const checkWithinBounds = (board, row, col) => {
   const ROW_SIZE = board.length;
   const COL_SIZE = board[0].length;
   return row >= 0 && row < ROW_SIZE && col >= 0 && col < COL_SIZE;
-}
+};
 
 const getAdjacents = (board, row, col) => {
   const neighbors = [];
@@ -37,42 +73,6 @@ const getAdjacents = (board, row, col) => {
   return neighbors;
 };
 
-const bfs = (board, setBoard, start, end) => {
-  const path = getPath(board, setBoard, start, end);
-  animate(board, setBoard, path);
-
-  const endingNode = board[end[0]][end[1]];
-  const shortestPath = getShortestPath(endingNode);
-  animateShortestPath(board, setBoard, shortestPath, path.length);
-};
-
-const getPath = (_board, setBoard, start, end) => {
-  const board = [..._board];
-  const path = [];
-
-  const startingNode = board[start[0]][start[1]];
-
-  const queue = [startingNode];
-
-  while (queue.length) {
-    const node = queue.shift();
-    const { row, col, isEnd, isWall, visited } = node;
-    if (visited || isWall) continue;
-
-    path.push(node);
-    board[row][col].visited = true;
-    if (isEnd) break;
-
-    const neighbors = getAdjacents(board, row, col);
-    for (const neighbor of neighbors) {
-      neighbor.previous = node;
-      queue.push(neighbor);
-    }
-  }
-
-  return path;
-};
-
 const getShortestPath = (endingNode) => {
   const shortestPath = [];
 
@@ -85,33 +85,29 @@ const getShortestPath = (endingNode) => {
   return shortestPath;
 };
 
-const animateShortestPath = (board, setBoard, shortestPath, j) => {
-  for (let i = 0; i < shortestPath.length; i++) {
-    setTimeout(() => {
-      const node = shortestPath[i];
-      const newBoard = [...board];
-      const newNode = {
-        ...node,
-        isPath: true,
-      };
-      newBoard[node.row][node.col] = newNode;
-      setBoard(newBoard);
-    }, 100 * (i + j));
-  }
-};
-
-const animate = (board, setBoard, order) => {
+const animate = (board, setBoard, order, time) => {
   for (let i = 0; i < order.length; i++) {
-    setTimeout(() => {
-      const node = order[i];
-      const newBoard = [...board];
-      const newNode = {
-        ...node,
-        isVisited: true,
-      };
-      newBoard[node.row][node.col] = newNode;
-      setBoard(newBoard);
-    }, 100 * i);
+    setTimeout(
+      () => {
+        const node = order[i];
+        const newBoard = [...board];
+        let newNode;
+
+        time
+          ? (newNode = newNode = {
+              ...node,
+              isPath: true,
+            })
+          : (newNode = {
+              ...node,
+              isVisited: true,
+            });
+
+        newBoard[node.row][node.col] = newNode;
+        setBoard(newBoard);
+      },
+      time ? 100 * (i + time) : 100 * i
+    );
   }
 };
 

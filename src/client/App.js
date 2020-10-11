@@ -9,7 +9,7 @@ import Controls from "./components/Controls";
 import BFS from "./algorithms/BFS";
 
 const STARTPOINT = [1, 1];
-const ENDPOINT = [3, 7];
+const ENDPOINT = [5, 7];
 
 const makeArray = (rSize, cSize) => {
   const newBoard = [];
@@ -33,7 +33,7 @@ const makeArray = (rSize, cSize) => {
 };
 
 const App = () => {
-  const [board, setBoard] = useState(makeArray(5, 20));
+  const [board, setBoard] = useState(makeArray(15, 50));
   const [start, setStart] = useState(STARTPOINT);
   const [end, setEnd] = useState(ENDPOINT);
 
