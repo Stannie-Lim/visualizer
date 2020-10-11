@@ -32,11 +32,12 @@ body {
 }
 
 .visited {
-  /* transition: 0.2s linear; */
+  transition: 0.4s linear;
   background-color: dodgerblue;
 }
 
 .path {
+  transition: 0.1s linear;
   background-color: yellow;
 }
 

@@ -45,6 +45,19 @@ const App = () => {
     setBoard(newArray);
   };
 
+  const randomWalls = () => {
+    const _board = [...board];
+    for (let i = 0; i < _board.length; i++) {
+      for (let j = 0; j < _board[i].length; j++) {
+        const randomBool = Math.floor(Math.random() * 4) === 0;
+        if (i === start[0] && j === start[1]) continue;
+        if (i === end[0] && j === end[1]) continue;
+        _board[i][j].isWall = randomBool;
+      }
+    }
+    setBoard(_board);
+  };
+
   return (
     <div className="main">
       <Controls
@@ -52,6 +65,7 @@ const App = () => {
         start={start}
         end={end}
         board={board}
+        randomWalls={randomWalls}
         setBoard={setBoard}
       />
       <Board board={board} makeWall={makeWall} />
