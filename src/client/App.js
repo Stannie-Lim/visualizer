@@ -9,7 +9,7 @@ import Controls from "./components/Controls";
 import BFS from "./algorithms/BFS";
 
 const STARTPOINT = [1, 1];
-const ENDPOINT = [2, 4];
+const ENDPOINT = [3, 7];
 
 const makeArray = (rSize, cSize) => {
   const newBoard = [];
@@ -23,6 +23,7 @@ const makeArray = (rSize, cSize) => {
         isEnd: row === ENDPOINT[0] && col === ENDPOINT[1],
         isWall: false,
         isVisited: false,
+        isPath: false,
       };
       arr.push(node);
     }

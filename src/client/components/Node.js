@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 
-const Node = ({ makeWall, row, col, isStart, isEnd, isWall, isVisited }) => {
+const Node = ({
+  makeWall,
+  row,
+  col,
+  isStart,
+  isEnd,
+  isWall,
+  isVisited,
+  isPath,
+}) => {
+  const extraClasses = isEnd
+    ? "ending-node"
+    : isStart
+    ? "starting-node"
+    : isWall
+    ? "wall"
+    : isVisited
+    ? "visited"
+    : isPath
+    ? "path"
+    : "";
   return (
     <div
-      className={
-        isVisited && !isStart && !isEnd
-          ? "cell visited"
-          : isWall
-          ? "cell wall"
-          : isStart
-          ? "cell starting-node"
-          : isEnd
-          ? "cell ending-node"
-          : "cell"
-      }
+      className={`cell ${extraClasses}`}
       onClick={() => makeWall(row, col)}
     />
   );

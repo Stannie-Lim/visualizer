@@ -6,7 +6,7 @@ import Node from "./Node";
 const Row = ({ row, makeWall }) => {
   return (
     <div className="row">
-      {row.map(({ row, col, isStart, isEnd, isWall, isVisited }) => (
+      {row.map(({ row, col, isStart, isEnd, isWall, isVisited, isPath }) => (
         <Node
           row={row}
           col={col}
@@ -15,6 +15,7 @@ const Row = ({ row, makeWall }) => {
           makeWall={makeWall}
           isWall={isWall}
           isVisited={isVisited}
+          isPath={isPath}
           key={`${row} ${col}`}
         />
       ))}

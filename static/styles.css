@@ -20,7 +20,7 @@ body {
 }
 
 .starting-node {
-  background-color: yellow;
+  background-color: lightseagreen;
 }
 
 .ending-node {
@@ -34,6 +34,10 @@ body {
 .visited {
   /* transition: 0.2s linear; */
   background-color: dodgerblue;
+}
+
+.path {
+  background-color: yellow;
 }
 
 .controls {
