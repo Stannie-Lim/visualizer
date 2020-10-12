@@ -22,7 +22,7 @@ import { animate } from "./animate/animate";
 import { WALL, PATH, VISIT } from "./utils/constants";
 
 const STARTPOINT = [1, 1];
-const ENDPOINT = [15, 1];
+const ENDPOINT = [14, 1];
 
 const [ROWS, COLS] = [21, 51];
 
