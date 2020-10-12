@@ -5,36 +5,25 @@ import { HashRouter, Route } from "react-router-dom";
 import Board from "./components/Board";
 import Controls from "./components/Controls";
 
-// algorithms
-import BFS from "./algorithms/BFS";
-import DFS from "./algorithms/DFS";
+// pathfinding algorithms
+import BFS from "./algorithms/pathfinding/BFS";
+import DFS from "./algorithms/pathfinding/DFS";
+
+// maze algorithms
+import recursiveDivision from "./algorithms/maze/recursiveDivision";
+
+// common
+import { makeArray } from "./utils/common";
 
 const STARTPOINT = [1, 1];
 const ENDPOINT = [13, 1];
 
-const makeArray = (rSize, cSize) => {
-  const newBoard = [];
-  for (let row = 0; row < rSize; row++) {
-    const arr = [];
-    for (let col = 0; col < cSize; col++) {
-      const node = {
-        row,
-        col,
-        isStart: row === STARTPOINT[0] && col === STARTPOINT[1],
-        isEnd: row === ENDPOINT[0] && col === ENDPOINT[1],
-        isWall: false,
-        isVisited: false,
-        isPath: false,
-      };
-      arr.push(node);
-    }
-    newBoard.push(arr);
-  }
-  return newBoard;
-};
+const [ROWS, COLS] = [31, 31];
 
 const App = () => {
-  const [board, setBoard] = useState(makeArray(15, 50));
+  const [board, setBoard] = useState(
+    makeArray(ROWS, COLS, STARTPOINT, ENDPOINT)
+  );
   const [start, setStart] = useState(STARTPOINT);
   const [end, setEnd] = useState(ENDPOINT);
   const [error, setError] = useState("");
@@ -60,8 +49,12 @@ const App = () => {
     setBoard(_board);
   };
 
+  const recursiveDivisionMaze = () => {
+    recursiveDivision(board, setBoard, STARTPOINT, ENDPOINT);
+  };
+
   const clear = () => {
-    setBoard(makeArray(15, 50));
+    setBoard(makeArray(ROWS, COLS, STARTPOINT, ENDPOINT));
   };
 
   return (
@@ -75,6 +68,7 @@ const App = () => {
           board={board}
           randomWalls={randomWalls}
           clear={clear}
+          recursiveDivision={recursiveDivisionMaze}
           setBoard={setBoard}
           setError={setError}
         />

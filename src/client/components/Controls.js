@@ -10,6 +10,7 @@ const Controls = ({
   randomWalls,
   setError,
   clear,
+  recursiveDivision,
 }) => {
   const callBFS = () => {
     try {
@@ -32,6 +33,7 @@ const Controls = ({
       <button onClick={callBFS}>BFS</button>
       <button onClick={callDFS}>DFS</button>
       <button onClick={randomWalls}>Randomize Board</button>
+      <button onClick={recursiveDivision}>Recursive Division</button>
       <button onClick={clear}>Clear</button>
     </div>
   );
