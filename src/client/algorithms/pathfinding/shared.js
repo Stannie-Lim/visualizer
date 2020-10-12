@@ -49,33 +49,4 @@ const getShortestPath = (endingNode) => {
   return shortestPath;
 };
 
-const animate = (board, setBoard, order, time) => {
-  for (let i = 0; i < order.length; i++) {
-    setTimeout(
-      () => {
-        const node = order[i];
-        const newBoard = [...board];
-        let newNode;
-
-        time
-          ? (newNode = newNode = {
-              ...node,
-              isPath: true,
-            })
-          : (newNode = {
-              ...node,
-              isVisited: true,
-            });
-
-        newBoard[node.row][node.col] = newNode;
-        setBoard(newBoard);
-      },
-      time ? 75 * (i + time) : 75 * i
-    );
-  }
-
-  if (order.length === 0 || !order[order.length - 1].isEnd)
-    throw "No valid path";
-};
-
-export { getAdjacents, getShortestPath, animate };
+export { getAdjacents, getShortestPath };

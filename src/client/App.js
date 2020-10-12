@@ -15,10 +15,16 @@ import recursiveDivision from "./algorithms/maze/recursiveDivision";
 // common
 import { makeArray } from "./utils/common";
 
+// animate
+import { animate } from "./animate/animate";
+
+// constants
+import { WALL, PATH, VISIT } from "./utils/constants";
+
 const STARTPOINT = [1, 1];
 const ENDPOINT = [13, 1];
 
-const [ROWS, COLS] = [31, 31];
+const [ROWS, COLS] = [21, 51];
 
 const App = () => {
   const [board, setBoard] = useState(
@@ -50,7 +56,8 @@ const App = () => {
   };
 
   const recursiveDivisionMaze = () => {
-    recursiveDivision(board, setBoard, STARTPOINT, ENDPOINT);
+    const order = recursiveDivision(board, setBoard, STARTPOINT, ENDPOINT);
+    animate(board, setBoard, order, WALL);
   };
 
   const clear = () => {

@@ -1,12 +1,14 @@
-import { getAdjacents, getShortestPath, animate } from "./shared";
+import { animate } from "../../animate/animate";
+import { PATH, VISIT } from "../../utils/constants";
+import { getAdjacents, getShortestPath } from "./shared";
 
 const dfs = (board, setBoard, start, end) => {
   const path = getPath(board, start);
-  animate(board, setBoard, path);
+  animate(board, setBoard, path, VISIT);
 
   const endingNode = board[end[0]][end[1]];
   const shortestPath = getShortestPath(endingNode);
-  animate(board, setBoard, shortestPath, path.length);
+  animate(board, setBoard, shortestPath, PATH, path.length);
 };
 
 const getPath = (_board, start) => {
