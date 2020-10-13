@@ -15,6 +15,8 @@ const Node = ({
     ? "ending-node"
     : isStart
     ? "starting-node"
+    : weight
+    ? "weight"
     : isWall
     ? "wall"
     : isVisited
