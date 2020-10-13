@@ -11,6 +11,7 @@ const makeArray = (rSize, cSize, STARTPOINT, ENDPOINT) => {
         isWall: false,
         isVisited: false,
         isPath: false,
+        weight: 0,
       };
       arr.push(node);
     }

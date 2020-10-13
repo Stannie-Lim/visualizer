@@ -30,15 +30,28 @@ const App = () => {
   const [board, setBoard] = useState(
     makeArray(ROWS, COLS, STARTPOINT, ENDPOINT)
   );
+
   const [start, setStart] = useState(STARTPOINT);
   const [end, setEnd] = useState(ENDPOINT);
+
   const [error, setError] = useState("");
+  const [weight, setWeight] = useState(1);
+  const [addWall, setWallOrWeight] = useState(true);
 
   const makeWall = (row, col) => {
     const newArray = [...board];
-    newArray[row][col].isWall
-      ? (newArray[row][col].isWall = false)
-      : (newArray[row][col].isWall = true);
+    if (addWall) {
+      newArray[row][col].isWall
+        ? (newArray[row][col].isWall = false)
+        : (newArray[row][col].isWall = true);
+    } else if (newArray[row][col].isWall) {
+        newArray[row][col].isWall = false;
+        newArray[row][col].weight = 0;
+      } else {
+        newArray[row][col].isWall = true;
+        newArray[row][col].weight = weight;
+        console.log(weight);
+      }
     setBoard(newArray);
   };
 
@@ -78,6 +91,10 @@ const App = () => {
           recursiveDivision={recursiveDivisionMaze}
           setBoard={setBoard}
           setError={setError}
+          setWallOrWeight={setWallOrWeight}
+          addWall={addWall}
+          weight={weight}
+          setWeight={setWeight}
         />
         <h1 className="error">{error}</h1>
       </div>

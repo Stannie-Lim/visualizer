@@ -3,7 +3,9 @@ body {
 }
 
 .cell {
+  color: white;
   outline: 1px solid grey;
+  user-select: none;
   width: 30px;
   height: 30px;
   display: inline-block;
