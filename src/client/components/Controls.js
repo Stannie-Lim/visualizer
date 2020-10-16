@@ -15,6 +15,7 @@ const Controls = ({
   addWall,
   weight,
   setWeight,
+  dijkstras,
 }) => {
   const MAX_WEIGHT = 100;
   const [weights, setWeights] = useState([]);
@@ -43,7 +44,13 @@ const Controls = ({
     }
   };
 
-  const callDijkstra = () => {};
+  const callDijkstra = () => {
+    try {
+      dijkstras(board, setBoard, start, end);
+    } catch (err) {
+      setError(err);
+    }
+  };
 
   const swapWallOrWeight = () => {
     setWallOrWeight(!addWall);

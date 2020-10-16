@@ -8,6 +8,7 @@ import Controls from "./components/Controls";
 // pathfinding algorithms
 import BFS from "./algorithms/pathfinding/BFS";
 import DFS from "./algorithms/pathfinding/DFS";
+import dijkstras from "./algorithms/pathfinding/dijkstras";
 
 // maze algorithms
 import recursiveDivision from "./algorithms/maze/recursiveDivision";
@@ -45,13 +46,13 @@ const App = () => {
         ? (newArray[row][col].isWall = false)
         : (newArray[row][col].isWall = true);
     } else if (newArray[row][col].isWall) {
-        newArray[row][col].isWall = false;
-        newArray[row][col].weight = 0;
-      } else {
-        newArray[row][col].isWall = true;
-        newArray[row][col].weight = weight;
-        console.log(weight);
-      }
+      newArray[row][col].isWall = false;
+      newArray[row][col].weight = 0;
+    } else {
+      newArray[row][col].isWall = true;
+      newArray[row][col].weight = weight;
+      console.log(weight);
+    }
     setBoard(newArray);
   };
 
@@ -95,6 +96,7 @@ const App = () => {
           addWall={addWall}
           weight={weight}
           setWeight={setWeight}
+          dijkstras={dijkstras}
         />
         <h1 className="error">{error}</h1>
       </div>
