@@ -3,7 +3,7 @@ import React from "react";
 // components
 import Node from "./Node";
 
-const Row = ({ row, makeWall }) => {
+const Row = ({ row, makeWall, addWall, makeWeight }) => {
   return (
     <div className="row">
       {row &&
@@ -19,6 +19,8 @@ const Row = ({ row, makeWall }) => {
               isVisited={isVisited}
               isPath={isPath}
               weight={weight}
+              addWall={addWall}
+              makeWeight={makeWeight}
               key={`${row} ${col}`}
             />
           )

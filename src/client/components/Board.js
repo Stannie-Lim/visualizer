@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // components
 import Row from "./Row";
 
-const Board = ({ board, makeWall, start, end }) => {
+const Board = ({ board, makeWall, start, end, addWall, makeWeight }) => {
   return (
     <div className="grid">
       {board.map((row, index) => {
@@ -14,6 +14,8 @@ const Board = ({ board, makeWall, start, end }) => {
             makeWall={makeWall}
             start={start}
             end={end}
+            addWall={addWall}
+            makeWeight={makeWeight}
           />
         );
       })}

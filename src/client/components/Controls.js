@@ -11,7 +11,7 @@ const Controls = ({
   setError,
   clear,
   recursiveDivision,
-  setWallOrWeight,
+  setWall,
   addWall,
   weight,
   setWeight,
@@ -20,7 +20,7 @@ const Controls = ({
   const MAX_WEIGHT = 100;
   const speed = 20;
   const [weights, setWeights] = useState([]);
-  const [totalWeight, setTotalWeight] = useState("");
+  const [totalWeight, setTotalWeight] = useState(0);
 
   useEffect(() => {
     const arr = [];
@@ -55,7 +55,7 @@ const Controls = ({
   };
 
   const swapWallOrWeight = () => {
-    setWallOrWeight(!addWall);
+    setWall(!addWall);
   };
 
   const changeWeight = ({ target }) => {
@@ -86,7 +86,7 @@ const Controls = ({
         )}
       </div>
 
-      {totalWeight && <h1>Total weight: {totalWeight}</h1>}
+      {totalWeight !== 0 ? <h1>Total weight: {totalWeight}</h1> : ""}
     </div>
   );
 };

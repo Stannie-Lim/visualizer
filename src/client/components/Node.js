@@ -10,6 +10,8 @@ const Node = ({
   isVisited,
   isPath,
   weight,
+  addWall,
+  makeWeight,
 }) => {
   const extraClasses = isEnd
     ? "ending-node"
@@ -28,7 +30,13 @@ const Node = ({
     <div
       id={`node-${row}-${col}`}
       className={`cell ${extraClasses}`}
-      onClick={() => makeWall(row, col)}
+      onClick={() => {
+        if (addWall) {
+          makeWall(row, col);
+        } else {
+          makeWeight(row, col);
+        }
+      }}
     >
       {weight === 0 ? <span>&#8203;</span> : weight}
     </div>

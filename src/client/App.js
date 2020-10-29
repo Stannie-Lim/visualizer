@@ -19,8 +19,8 @@ import { makeArray } from "./utils/common";
 // animate
 import { animateMaze } from "./animate/animateMaze";
 
-const STARTPOINT = [10, 15];
-const ENDPOINT = [10, 35];
+const STARTPOINT = [10, 10];
+const ENDPOINT = [10, 40];
 
 const [ROWS, COLS] = [21, 51];
 
@@ -34,15 +34,19 @@ const App = () => {
 
   const [error, setError] = useState("");
   const [weight, setWeight] = useState(1);
-  const [addWall, setWallOrWeight] = useState(true);
+  const [addWall, setWall] = useState(true);
 
   const makeWall = (row, col) => {
     const newArray = [...board];
-    if (addWall) {
-      newArray[row][col].isWall
-        ? (newArray[row][col].isWall = false)
-        : (newArray[row][col].isWall = true);
-    } else if (newArray[row][col].isWall) {
+    newArray[row][col].isWall
+      ? (newArray[row][col].isWall = false)
+      : (newArray[row][col].isWall = true);
+    setBoard(newArray);
+  };
+
+  const makeWeight = (row, col) => {
+    const newArray = [...board];
+    if (newArray[row][col].isWall) {
       newArray[row][col].isWall = false;
       newArray[row][col].weight = 0;
     } else {
@@ -93,15 +97,21 @@ const App = () => {
           recursiveDivision={recursiveDivisionMaze}
           setBoard={setBoard}
           setError={setError}
-          setWallOrWeight={setWallOrWeight}
           addWall={addWall}
+          setWall={setWall}
+          makeWeight={makeWeight}
           weight={weight}
           setWeight={setWeight}
           dijkstras={dijkstras}
         />
         <h1 className="error">{error}</h1>
       </div>
-      <Board board={board} makeWall={makeWall} />
+      <Board
+        board={board}
+        makeWall={makeWall}
+        addWall={addWall}
+        makeWeight={makeWeight}
+      />
     </div>
   );
 };
