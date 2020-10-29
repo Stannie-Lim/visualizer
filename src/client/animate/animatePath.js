@@ -1,4 +1,10 @@
-const animatePath = (order, shortestPath, time, speed) => {
+const animatePath = (
+  order,
+  shortestPath,
+  time,
+  speed,
+  setTotalWeight = null
+) => {
   for (let i = 0; i < order.length; i++) {
     const node = order[i];
 
@@ -13,6 +19,12 @@ const animatePath = (order, shortestPath, time, speed) => {
     setTimeout(() => {
       path(node);
     }, speed * (i + time));
+  }
+
+  if (setTotalWeight) {
+    setTimeout(() => {
+      setTotalWeight(shortestPath[shortestPath.length - 1].distance);
+    }, speed * (shortestPath.length + time));
   }
 
   if (order.length === 0 || !order[order.length - 1].isEnd)

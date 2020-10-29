@@ -2,13 +2,11 @@ import { getShortestPath } from "./shared";
 import { MaxHeap } from "../../utils/MaxHeap";
 import { animatePath } from "../../animate/animatePath";
 
-const dijkstras = (board, setBoard, start, end) => {
+const dijkstras = (board, setBoard, start, end, speed, setTotalWeight) => {
   const path = getPath(board, start, end);
-  animatePath(board, setBoard, path, VISIT);
-
   const endingNode = board[end[0]][end[1]];
   const shortestPath = getShortestPath(endingNode);
-  animatePath(board, setBoard, shortestPath, PATH, path.length);
+  animatePath(path, shortestPath, path.length, speed, setTotalWeight);
 };
 
 const getPath = (_board, [startRow, startCol], [endRow, endCol]) => {
@@ -18,41 +16,31 @@ const getPath = (_board, [startRow, startCol], [endRow, endCol]) => {
   const startNode = board[startRow][startCol];
   const endNode = board[endRow][endCol];
 
-  startNode.distance = 0;
   const unvisited = getAllNodes(board);
+  startNode.distance = 0;
 
   while (unvisited.length) {
     unvisited.sort((a, b) => a.distance - b.distance);
     const closest = unvisited.shift();
-    if (closest.isWall) continue;
+    const { row, col } = closest;
+    if (
+      closest.isWall ||
+      document.querySelector(`#node-${row}-${col}`).classList.contains("wall")
+    )
+      continue;
     if (closest.distance === Infinity) return path;
     closest.isVisited = true;
     path.push(closest);
     if (closest === endNode) return path;
     updateUnvisited(closest, board);
   }
-
-  // const distances = {};
-  // const maxHeap = new MaxHeap();
-  // const previousNodes = {};
-
-  // const startingNode = board[startRow][startCol];
-  // distances[startingNode] = 0;
-
-  // maxHeap.insert({ node: startingNode, distance: 0 });
-  // console.log(maxHeap);
-
-  // while(maxHeap.size) {
-  //   const shortest = maxHeap.remove();
-  //   console.log(shortest);
-  // }
 };
 
 const updateUnvisited = (node, board) => {
   const unvisited = getUnvisitedNeighbors(node, board);
   for (const neighbor of unvisited) {
-    neighbor.distance = node.distance + 1;
-    neighbor.previousNode = node;
+    neighbor.distance = node.distance + node.weight;
+    neighbor.previous = node;
   }
 };
 
@@ -75,6 +63,7 @@ const getAllNodes = (board) => {
   const allNodes = [];
   for (const row of board) {
     for (const node of row) {
+      node.distance = Infinity;
       allNodes.push(node);
     }
   }

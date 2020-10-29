@@ -20,6 +20,7 @@ const Controls = ({
   const MAX_WEIGHT = 100;
   const speed = 20;
   const [weights, setWeights] = useState([]);
+  const [totalWeight, setTotalWeight] = useState("");
 
   useEffect(() => {
     const arr = [];
@@ -47,7 +48,7 @@ const Controls = ({
 
   const callDijkstra = () => {
     try {
-      dijkstras(board, setBoard, start, end);
+      dijkstras(board, setBoard, start, end, speed, setTotalWeight);
     } catch (err) {
       setError(err);
     }
@@ -84,6 +85,8 @@ const Controls = ({
           <div />
         )}
       </div>
+
+      {totalWeight && <h1>Total weight: {totalWeight}</h1>}
     </div>
   );
 };

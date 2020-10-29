@@ -46,9 +46,8 @@ const App = () => {
       newArray[row][col].isWall = false;
       newArray[row][col].weight = 0;
     } else {
-      newArray[row][col].isWall = true;
-      newArray[row][col].weight = weight;
-      console.log(weight);
+      newArray[row][col].isWall = false;
+      newArray[row][col].weight = weight * 1;
     }
     setBoard(newArray);
   };
