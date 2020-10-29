@@ -25,7 +25,11 @@ const Node = ({
     ? "path"
     : "";
   return (
-    <div className={`cell ${extraClasses}`} onClick={() => makeWall(row, col)}>
+    <div
+      id={`node-${row}-${col}`}
+      className={`cell ${extraClasses}`}
+      onClick={() => makeWall(row, col)}
+    >
       {weight === 0 ? <span>&#8203;</span> : weight}
     </div>
   );

@@ -18,6 +18,7 @@ const Controls = ({
   dijkstras,
 }) => {
   const MAX_WEIGHT = 100;
+  const speed = 20;
   const [weights, setWeights] = useState([]);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const Controls = ({
 
   const callBFS = () => {
     try {
-      BFS(board, setBoard, start, end);
+      BFS(board, setBoard, start, end, speed);
     } catch (err) {
       setError(err);
     }
@@ -38,7 +39,7 @@ const Controls = ({
 
   const callDFS = () => {
     try {
-      DFS(board, setBoard, start, end);
+      DFS(board, setBoard, start, end, speed);
     } catch (err) {
       setError(err);
     }

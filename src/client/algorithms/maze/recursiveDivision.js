@@ -1,6 +1,6 @@
 import { makeArray } from "../../utils/common";
 
-function recursiveDivision(board, setBoard, STARTPOINT, ENDPOINT) {
+const recursiveDivision = (board, setBoard, STARTPOINT, ENDPOINT) => {
   const [rows, cols] = [board.length, board[0].length];
 
   const newBoard = makeArray(rows, cols, STARTPOINT, ENDPOINT);
@@ -10,8 +10,11 @@ function recursiveDivision(board, setBoard, STARTPOINT, ENDPOINT) {
 
   const outer = addOuterWalls(newBoard, rows, cols);
 
-  return [...outer, ...inner];
-}
+  return {
+    order: [...outer, ...inner],
+    newBoard,
+  };
+};
 
 const addOuterWalls = (newBoard, rows, cols) => {
   const arr = [];
@@ -19,14 +22,20 @@ const addOuterWalls = (newBoard, rows, cols) => {
   for (let i = 0; i < rows; i++) {
     if (i === 0 || i === rows - 1) {
       for (let j = 0; j < cols; j++) {
-        newBoard[i][j].isWall = true;
-        arr.push(newBoard[i][j]);
+        if (!isStartOrEnd(newBoard, i, j)) {
+          newBoard[i][j].isWall = true;
+          arr.push(newBoard[i][j]);
+        }
       }
     } else {
-      newBoard[i][0].isWall = true;
-      newBoard[i][cols - 1].isWall = true;
-      arr.push(newBoard[i][0]);
-      arr.push(newBoard[i][cols - 1]);
+      if (!isStartOrEnd(newBoard, i, 0)) {
+        newBoard[i][0].isWall = true;
+        arr.push(newBoard[i][0]);
+      }
+      if (!isStartOrEnd(newBoard, i, cols - 1)) {
+        newBoard[i][cols - 1].isWall = true;
+        arr.push(newBoard[i][cols - 1]);
+      }
     }
   }
 
@@ -58,10 +67,10 @@ const addHorizontalWall = (newBoard, minX, maxX, y, arr) => {
 
   for (let i = minX; i <= maxX; i++) {
     if (i === hole || newBoard[y][i].isEnd) newBoard[y][i].isWall = false;
-    else {
-      newBoard[y][i].isWall = true;
-      arr.push(newBoard[y][i]);
-    }
+    else if (!isStartOrEnd(newBoard, y, i)) {
+        newBoard[y][i].isWall = true;
+        arr.push(newBoard[y][i]);
+      }
   }
 };
 
@@ -70,12 +79,15 @@ const addVerticalWall = (newBoard, minY, maxY, x, arr) => {
 
   for (let i = minY; i <= maxY; i++) {
     if (i === hole || newBoard[i][x].isEnd) newBoard[i][x].isWall = false;
-    else {
-      newBoard[i][x].isWall = true;
-      arr.push(newBoard[i][x]);
-    }
+    else if (!isStartOrEnd(newBoard, i, x)) {
+        newBoard[i][x].isWall = true;
+        arr.push(newBoard[i][x]);
+      }
   }
 };
+
+const isStartOrEnd = (board, row, col) =>
+  board[row][col].isStart || board[row][col].isEnd;
 
 const getRandomNumber = (min, max) =>
   Math.floor(Math.random() * (max - min + 1) + min);

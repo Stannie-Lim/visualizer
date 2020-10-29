@@ -1,14 +1,11 @@
-import { animate } from "../../animate/animate";
-import { PATH, VISIT } from "../../utils/constants";
+import { animatePath } from "../../animate/animatePath";
 import { getAdjacents, getShortestPath } from "./shared";
 
-const dfs = (board, setBoard, start, end) => {
+const dfs = (board, setBoard, start, end, speed) => {
   const path = getPath(board, start);
-  animate(board, setBoard, path, VISIT);
-
   const endingNode = board[end[0]][end[1]];
   const shortestPath = getShortestPath(endingNode);
-  animate(board, setBoard, shortestPath, PATH, path.length);
+  animatePath(path, shortestPath, path.length, speed);
 };
 
 const getPath = (_board, start) => {
@@ -22,7 +19,12 @@ const getPath = (_board, start) => {
   while (queue.length) {
     const node = queue.pop();
     const { row, col, isEnd, isWall, visited } = node;
-    if (visited || isWall) continue;
+    if (
+      visited ||
+      isWall ||
+      document.querySelector(`#node-${row}-${col}`).classList.contains("wall")
+    )
+      continue;
 
     path.push(node);
     board[row][col].visited = true;
