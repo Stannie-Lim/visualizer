@@ -1,5 +1,4 @@
 import { getShortestPath } from "./shared";
-import { MaxHeap } from "../../utils/MaxHeap";
 import { animatePath } from "../../animate/animatePath";
 
 const dijkstras = (board, setBoard, start, end, speed, setTotalWeight) => {
