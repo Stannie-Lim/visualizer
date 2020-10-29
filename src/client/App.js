@@ -1,5 +1,7 @@
+import { DndProvider } from "react-dnd";
 import React, { useState, useEffect } from "react";
 import { HashRouter, Route } from "react-router-dom";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 // components
 import Board from "./components/Board";
@@ -106,12 +108,14 @@ const App = () => {
         />
         <h1 className="error">{error}</h1>
       </div>
-      <Board
-        board={board}
-        makeWall={makeWall}
-        addWall={addWall}
-        makeWeight={makeWeight}
-      />
+      <DndProvider backend={HTML5Backend}>
+        <Board
+          board={board}
+          makeWall={makeWall}
+          addWall={addWall}
+          makeWeight={makeWeight}
+        />
+      </DndProvider>
     </div>
   );
 };

@@ -1,4 +1,7 @@
+import { useDrag } from "react-dnd";
 import React, { useState } from "react";
+
+const CARD = "card";
 
 const Node = ({
   makeWall,
@@ -12,6 +15,8 @@ const Node = ({
   weight,
   addWall,
   makeWeight,
+  isDragging,
+  text,
 }) => {
   const extraClasses = isEnd
     ? "ending-node"
@@ -26,8 +31,18 @@ const Node = ({
     : isPath
     ? "path"
     : "";
+
+  const [{ opacity }, dragRef] = useDrag({
+    item: { type: CARD, text },
+    collect: (monitor) => ({
+      opacity: monitor.isDragging() ? 0.5 : 1,
+    }),
+  });
+
   return (
     <div
+      ref={isStart || isEnd ? dragRef : null}
+      style={{ opacity }}
       id={`node-${row}-${col}`}
       className={`cell ${extraClasses}`}
       onClick={() => {
