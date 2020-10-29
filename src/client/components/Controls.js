@@ -86,7 +86,7 @@ const Controls = ({
         )}
       </div>
 
-      {totalWeight && <h1>Total eight: {totalWeight}</h1>}
+      {totalWeight && <h1>Total weight: {totalWeight}</h1>}
     </div>
   );
 };
