@@ -3,7 +3,9 @@ const animatePath = (
   shortestPath,
   time,
   speed,
-  setTotalWeight = null
+  setTotalWeight = null,
+  setTimer,
+  totalTime
 ) => {
   for (let i = 0; i < order.length; i++) {
     const node = order[i];
@@ -21,11 +23,12 @@ const animatePath = (
     }, speed * (i + time));
   }
 
-  if (setTotalWeight) {
-    setTimeout(() => {
+  setTimeout(() => {
+    if (setTotalWeight) {
       setTotalWeight(shortestPath[shortestPath.length - 1].distance);
-    }, speed * (shortestPath.length + time));
-  }
+    }
+    setTimer(totalTime.toFixed(2));
+  }, speed * (shortestPath.length + time));
 
   if (order.length === 0 || !order[order.length - 1].isEnd)
     throw "No valid path";

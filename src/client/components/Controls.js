@@ -16,6 +16,8 @@ const Controls = ({
   weight,
   setWeight,
   dijkstras,
+  setTimer,
+  timer,
 }) => {
   const MAX_WEIGHT = 100;
   const speed = 20;
@@ -32,7 +34,7 @@ const Controls = ({
 
   const callBFS = () => {
     try {
-      BFS(board, setBoard, start, end, speed);
+      BFS(board, setBoard, start, end, speed, setTimer);
     } catch (err) {
       setError(err);
     }
@@ -40,7 +42,7 @@ const Controls = ({
 
   const callDFS = () => {
     try {
-      DFS(board, setBoard, start, end, speed);
+      DFS(board, setBoard, start, end, speed, setTimer);
     } catch (err) {
       setError(err);
     }
@@ -48,7 +50,7 @@ const Controls = ({
 
   const callDijkstra = () => {
     try {
-      dijkstras(board, setBoard, start, end, speed, setTotalWeight);
+      dijkstras(board, setBoard, start, end, speed, setTotalWeight, setTimer);
     } catch (err) {
       setError(err);
     }
@@ -87,6 +89,7 @@ const Controls = ({
       </div>
 
       {totalWeight !== 0 ? <h1>Total weight: {totalWeight}</h1> : ""}
+      {timer !== 0 ? <h1>Execution time: {timer} milliseconds</h1> : ""}
     </div>
   );
 };

@@ -1,11 +1,28 @@
-import { getShortestPath } from "./shared";
+import { getShortestPath, measurePerformance } from "./shared";
 import { animatePath } from "../../animate/animatePath";
 
-const dijkstras = (board, setBoard, start, end, speed, setTotalWeight) => {
-  const path = getPath(board, start, end);
+const dijkstras = (
+  board,
+  setBoard,
+  start,
+  end,
+  speed,
+  setTotalWeight,
+  setTimer
+) => {
+  const [path, totalTime] = measurePerformance(getPath, board, start, end);
+
   const endingNode = board[end[0]][end[1]];
   const shortestPath = getShortestPath(endingNode);
-  animatePath(path, shortestPath, path.length, speed, setTotalWeight);
+  animatePath(
+    path,
+    shortestPath,
+    path.length,
+    speed,
+    setTotalWeight,
+    setTimer,
+    totalTime
+  );
 };
 
 const getPath = (_board, [startRow, startCol], [endRow, endCol]) => {

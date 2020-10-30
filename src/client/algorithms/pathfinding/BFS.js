@@ -1,11 +1,20 @@
 import { animatePath } from "../../animate/animatePath";
-import { getAdjacents, getShortestPath } from "./shared";
+import { getAdjacents, getShortestPath, measurePerformance } from "./shared";
 
-const bfs = (board, setBoard, start, end, speed) => {
-  const path = getPath(board, start);
+const bfs = (board, setBoard, start, end, speed, setTimer) => {
+  const [path, totalTime] = measurePerformance(getPath, board, start);
+
   const endingNode = board[end[0]][end[1]];
   const shortestPath = getShortestPath(endingNode);
-  animatePath(path, shortestPath, path.length, speed);
+  animatePath(
+    path,
+    shortestPath,
+    path.length,
+    speed,
+    null,
+    setTimer,
+    totalTime
+  );
 };
 
 const getPath = (_board, start) => {

@@ -40,6 +40,8 @@ const App = () => {
   const [weight, setWeight] = useState(1);
   const [addWall, setWall] = useState(true);
 
+  const [timer, setTimer] = useState(0);
+
   const makeWall = (row, col) => {
     if (removeWalls)
       document.querySelector(`#node-${row}-${col}`).classList.remove("wall");
@@ -129,6 +131,8 @@ const App = () => {
           weight={weight}
           setWeight={setWeight}
           dijkstras={dijkstras}
+          setTimer={setTimer}
+          timer={timer}
         />
         <h1 className="error">{error}</h1>
       </div>

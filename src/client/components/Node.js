@@ -29,8 +29,6 @@ const Node = ({
     ? "weight"
     : isWall
     ? "wall"
-    : isVisited
-    ? "visited"
     : isPath
     ? "path"
     : "";

@@ -49,4 +49,12 @@ const getShortestPath = (endingNode) => {
   return shortestPath;
 };
 
-export { getAdjacents, getShortestPath };
+const measurePerformance = (callback, board, start, end) => {
+  const startTime = performance.now();
+  const path = callback(board, start, end);
+  const endTime = performance.now();
+
+  return [path, endTime - startTime];
+};
+
+export { getAdjacents, getShortestPath, measurePerformance };
