@@ -1,9 +1,10 @@
-import { useDrag } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 import React, { useState } from "react";
-
-const CARD = "card";
+import { ItemTypes } from "../utils/ItemTypes";
 
 const Node = ({
+  board,
+  setBoard,
   makeWall,
   row,
   col,
@@ -15,7 +16,8 @@ const Node = ({
   weight,
   addWall,
   makeWeight,
-  text,
+  setStart,
+  setEnd,
 }) => {
   const extraClasses = isEnd
     ? "ending-node"
@@ -32,11 +34,17 @@ const Node = ({
     : "";
 
   const [{ isDragging }, drag] = useDrag({
-    item: { name, type: "BOX" },
+    item: { name, type: ItemTypes.START },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
-        console.log(`You dropped ${item.name} into ${dropResult.name}!`);
+        const newBoard = [...board];
+        newBoard[row][col].isStart = false;
+
+        const [newRow, newCol] = dropResult.name.split("-");
+        newBoard[newRow][newCol].isStart = true;
+        setStart([row, col]);
+        setBoard(newBoard);
       }
     },
     collect: (monitor) => ({
@@ -44,9 +52,18 @@ const Node = ({
     }),
   });
 
+  const [{ canDrop, isOver }, drop] = useDrop({
+    accept: ItemTypes.START,
+    drop: () => ({ name: `${row * 1}-${col * 1}` }),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  });
+
   return (
     <div
-      ref={isStart || isEnd ? drag : null}
+      ref={isStart || isEnd ? drag : drop}
       id={`node-${row}-${col}`}
       className={`cell ${extraClasses}`}
       onClick={() => {

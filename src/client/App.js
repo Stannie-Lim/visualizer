@@ -111,9 +111,12 @@ const App = () => {
       <DndProvider backend={HTML5Backend}>
         <Board
           board={board}
+          setBoard={setBoard}
           makeWall={makeWall}
           addWall={addWall}
           makeWeight={makeWeight}
+          setStart={setStart}
+          setEnd={setEnd}
         />
       </DndProvider>
     </div>
