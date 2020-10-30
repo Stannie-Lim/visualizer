@@ -72,12 +72,7 @@ const App = () => {
   };
 
   const recursiveDivisionMaze = () => {
-    const { order, newBoard } = recursiveDivision(
-      board,
-      setBoard,
-      STARTPOINT,
-      ENDPOINT
-    );
+    const { order, newBoard } = recursiveDivision(board, setBoard, start, end);
     animateMaze(order, setBoard, newBoard);
   };
 

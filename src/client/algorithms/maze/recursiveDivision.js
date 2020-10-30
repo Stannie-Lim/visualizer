@@ -1,9 +1,9 @@
 import { makeArray } from "../../utils/common";
 
-const recursiveDivision = (board, setBoard, STARTPOINT, ENDPOINT) => {
+const recursiveDivision = (board, setBoard, start, end) => {
   const [rows, cols] = [board.length, board[0].length];
 
-  const newBoard = makeArray(rows, cols, STARTPOINT, ENDPOINT);
+  const newBoard = makeArray(rows, cols, start, end);
 
   const inner = [];
   addInnerWalls(newBoard, true, 1, cols - 2, 1, rows - 2, inner);
@@ -66,11 +66,12 @@ const addHorizontalWall = (newBoard, minX, maxX, y, arr) => {
   const hole = Math.floor(getRandomNumber(minX, maxX) / 2) * 2 + 1;
 
   for (let i = minX; i <= maxX; i++) {
-    if (i === hole || newBoard[y][i].isEnd) newBoard[y][i].isWall = false;
+    if (i === hole || newBoard[y][i].isEnd || newBoard[y][i].isStart)
+      newBoard[y][i].isWall = false;
     else if (!isStartOrEnd(newBoard, y, i)) {
-        newBoard[y][i].isWall = true;
-        arr.push(newBoard[y][i]);
-      }
+      newBoard[y][i].isWall = true;
+      arr.push(newBoard[y][i]);
+    }
   }
 };
 
@@ -78,11 +79,12 @@ const addVerticalWall = (newBoard, minY, maxY, x, arr) => {
   const hole = Math.floor(getRandomNumber(minY, maxY) / 2) * 2 + 1;
 
   for (let i = minY; i <= maxY; i++) {
-    if (i === hole || newBoard[i][x].isEnd) newBoard[i][x].isWall = false;
+    if (i === hole || newBoard[i][x].isEnd || newBoard[i][x].isStart)
+      newBoard[i][x].isWall = false;
     else if (!isStartOrEnd(newBoard, i, x)) {
-        newBoard[i][x].isWall = true;
-        arr.push(newBoard[i][x]);
-      }
+      newBoard[i][x].isWall = true;
+      arr.push(newBoard[i][x]);
+    }
   }
 };
 

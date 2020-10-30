@@ -42,8 +42,8 @@ const Node = ({
         newBoard[row][col].isStart = false;
 
         const [newRow, newCol] = dropResult.name.split("-");
-        newBoard[newRow][newCol].isStart = true;
-        setStart([row, col]);
+        newBoard[newRow * 1][newCol * 1].isStart = true;
+        setStart([newRow * 1, newCol * 1]);
         setBoard(newBoard);
       }
     },
@@ -54,7 +54,7 @@ const Node = ({
 
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: ItemTypes.START,
-    drop: () => ({ name: `${row * 1}-${col * 1}` }),
+    drop: () => ({ name: `${row}-${col}` }),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
