@@ -43,6 +43,7 @@ const App = () => {
   const [timer, setTimer] = useState(0);
 
   const makeWall = (row, col) => {
+    if (board[row][col].isStart || board[row][col].isEnd) return;
     if (removeWalls)
       document.querySelector(`#node-${row}-${col}`).classList.remove("wall");
     else document.querySelector(`#node-${row}-${col}`).classList.add("wall");
