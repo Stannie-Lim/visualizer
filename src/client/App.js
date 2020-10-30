@@ -29,6 +29,7 @@ const App = () => {
     makeArray(ROWS, COLS, STARTPOINT, ENDPOINT)
   );
   const [isMouseDown, setMouseDown] = useState(false);
+  const [removeWalls, setRemoveWalls] = useState(false);
 
   const [addWalls, setAddWalls] = useState(false);
 
@@ -40,7 +41,15 @@ const App = () => {
   const [addWall, setWall] = useState(true);
 
   const makeWall = (row, col) => {
-    document.querySelector(`#node-${row}-${col}`).classList.toggle("wall");
+    if (removeWalls)
+      document.querySelector(`#node-${row}-${col}`).classList.remove("wall");
+    else document.querySelector(`#node-${row}-${col}`).classList.add("wall");
+  };
+
+  const isWall = (row, col) => {
+    return document
+      .querySelector(`#node-${row}-${col}`)
+      .classList.contains("wall");
   };
 
   const makeWeight = (row, col) => {
@@ -80,6 +89,8 @@ const App = () => {
   const onMouseDown = (row, col) => {
     if (!board[row][col].isStart && !board[row][col].isEnd) {
       setAddWalls(true);
+      if (isWall(row, col)) setRemoveWalls(true);
+      else setRemoveWalls(false);
     }
     setMouseDown(true);
   };
