@@ -33,7 +33,7 @@ const Node = ({
     ? "path"
     : "";
 
-  const [{ isDragging }, drag] = useDrag({
+  const [draggingStart, dragStart] = useDrag({
     item: { name, type: ItemTypes.START },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
@@ -44,6 +44,25 @@ const Node = ({
         const [newRow, newCol] = dropResult.name.split("-");
         newBoard[newRow * 1][newCol * 1].isStart = true;
         setStart([newRow * 1, newCol * 1]);
+        setBoard(newBoard);
+      }
+    },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+
+  const [draggingEnd, dragEnd] = useDrag({
+    item: { name, type: ItemTypes.START },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult();
+      if (item && dropResult) {
+        const newBoard = [...board];
+        newBoard[row][col].isEnd = false;
+
+        const [newRow, newCol] = dropResult.name.split("-");
+        newBoard[newRow * 1][newCol * 1].isEnd = true;
+        setEnd([newRow * 1, newCol * 1]);
         setBoard(newBoard);
       }
     },
@@ -63,7 +82,7 @@ const Node = ({
 
   return (
     <div
-      ref={isStart || isEnd ? drag : drop}
+      ref={isStart && !isEnd ? dragStart : !isStart && isEnd ? dragEnd : drop}
       id={`node-${row}-${col}`}
       className={`cell ${extraClasses}`}
       onClick={() => {
