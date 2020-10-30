@@ -15,7 +15,6 @@ const Node = ({
   weight,
   addWall,
   makeWeight,
-  isDragging,
   text,
 }) => {
   const extraClasses = isEnd
@@ -32,17 +31,22 @@ const Node = ({
     ? "path"
     : "";
 
-  const [{ opacity }, dragRef] = useDrag({
-    item: { type: CARD, text },
+  const [{ isDragging }, drag] = useDrag({
+    item: { name, type: "BOX" },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult();
+      if (item && dropResult) {
+        console.log(`You dropped ${item.name} into ${dropResult.name}!`);
+      }
+    },
     collect: (monitor) => ({
-      opacity: monitor.isDragging() ? 0.5 : 1,
+      isDragging: monitor.isDragging(),
     }),
   });
 
   return (
     <div
-      ref={isStart || isEnd ? dragRef : null}
-      style={{ opacity }}
+      ref={isStart || isEnd ? drag : null}
       id={`node-${row}-${col}`}
       className={`cell ${extraClasses}`}
       onClick={() => {
