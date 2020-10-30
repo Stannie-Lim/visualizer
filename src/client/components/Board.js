@@ -13,6 +13,9 @@ const Board = ({
   makeWeight,
   setStart,
   setEnd,
+  onMouseDown,
+  onMouseUp,
+  onMouseEnter,
 }) => {
   return (
     <div className="grid">
@@ -30,6 +33,9 @@ const Board = ({
             makeWeight={makeWeight}
             setStart={setStart}
             setEnd={setEnd}
+            onMouseDown={onMouseDown}
+            onMouseEnter={onMouseEnter}
+            onMouseUp={onMouseUp}
           />
         );
       })}

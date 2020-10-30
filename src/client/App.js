@@ -28,6 +28,9 @@ const App = () => {
   const [board, setBoard] = useState(
     makeArray(ROWS, COLS, STARTPOINT, ENDPOINT)
   );
+  const [isMouseDown, setMouseDown] = useState(false);
+
+  const [addWalls, setAddWalls] = useState(false);
 
   const [start, setStart] = useState(STARTPOINT);
   const [end, setEnd] = useState(ENDPOINT);
@@ -37,11 +40,7 @@ const App = () => {
   const [addWall, setWall] = useState(true);
 
   const makeWall = (row, col) => {
-    const newArray = [...board];
-    newArray[row][col].isWall
-      ? (newArray[row][col].isWall = false)
-      : (newArray[row][col].isWall = true);
-    setBoard(newArray);
+    document.querySelector(`#node-${row}-${col}`).classList.toggle("wall");
   };
 
   const makeWeight = (row, col) => {
@@ -78,6 +77,27 @@ const App = () => {
     setBoard(makeArray(ROWS, COLS, STARTPOINT, ENDPOINT));
   };
 
+  const onMouseDown = (row, col) => {
+    if (!board[row][col].isStart && !board[row][col].isEnd) {
+      setAddWalls(true);
+    }
+    setMouseDown(true);
+  };
+
+  const onMouseEnter = (row, col) => {
+    if (!isMouseDown) return;
+    if (addWalls) {
+      makeWall(row, col);
+    } else {
+      console.log(row, col);
+    }
+  };
+
+  const onMouseUp = () => {
+    if (addWalls) setAddWalls(false);
+    setMouseDown(false);
+  };
+
   return (
     <div className="main">
       <div className="top">
@@ -109,6 +129,9 @@ const App = () => {
         makeWeight={makeWeight}
         setStart={setStart}
         setEnd={setEnd}
+        onMouseDown={onMouseDown}
+        onMouseEnter={onMouseEnter}
+        onMouseUp={onMouseUp}
       />
     </div>
   );

@@ -12,6 +12,9 @@ const Row = ({
   makeWeight,
   setStart,
   setEnd,
+  onMouseUp,
+  onMouseDown,
+  onMouseEnter,
 }) => {
   return (
     <div className="row">
@@ -34,6 +37,9 @@ const Row = ({
               makeWeight={makeWeight}
               setStart={setStart}
               setEnd={setEnd}
+              onMouseDown={onMouseDown}
+              onMouseEnter={onMouseEnter}
+              onMouseUp={onMouseUp}
               key={`${row} ${col}`}
             />
           )
