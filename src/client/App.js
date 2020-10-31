@@ -30,9 +30,11 @@ const App = () => {
   );
   const [isMouseDown, setMouseDown] = useState(false);
   const [removeWalls, setRemoveWalls] = useState(false);
+  const [isMovingStart, setIsMovingStart] = useState(false);
 
   const [addWalls, setAddWalls] = useState(false);
 
+  const [previousStart, setPreviousStart] = useState([]);
   const [start, setStart] = useState(STARTPOINT);
   const [end, setEnd] = useState(ENDPOINT);
 
@@ -43,7 +45,13 @@ const App = () => {
   const [timer, setTimer] = useState(0);
 
   const makeWall = (row, col) => {
-    if (board[row][col].isStart || board[row][col].isEnd) return;
+    if (
+      board[row][col].isStart ||
+      board[row][col].isEnd ||
+      isStart(row, col) ||
+      isEnd(row, col)
+    )
+      return;
     if (removeWalls)
       document.querySelector(`#node-${row}-${col}`).classList.remove("wall");
     else document.querySelector(`#node-${row}-${col}`).classList.add("wall");
@@ -108,6 +116,7 @@ const App = () => {
       else setRemoveWalls(false);
     } else {
       setStart([row, col]);
+      setPreviousStart([start[0], start[1]]);
     }
     setMouseDown(true);
   };
@@ -118,6 +127,7 @@ const App = () => {
       makeWall(row, col);
     } else {
       if (isWall(row, col)) return;
+      setIsMovingStart(true);
       document
         .querySelector(`#node-${start[0]}-${start[1]}`)
         .classList.remove("starting-node");
@@ -128,8 +138,16 @@ const App = () => {
     }
   };
 
-  const onMouseUp = () => {
-    if (addWalls) setAddWalls(false);
+  const onMouseUp = (row, col) => {
+    if (addWalls) {
+      setAddWalls(false);
+    } else if (isMovingStart) {
+      const _board = [...board];
+      _board[row][col].isStart = true;
+      _board[previousStart[0]][previousStart[1]].isStart = false;
+      setBoard(_board);
+      setIsMovingStart(false);
+    }
     setMouseDown(false);
   };
 

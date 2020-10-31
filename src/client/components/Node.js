@@ -48,7 +48,7 @@ const Node = ({
       onClick={addWallOrWeight}
       onMouseDown={() => onMouseDown(row, col)}
       onMouseEnter={() => onMouseEnter(row, col)}
-      onMouseUp={() => onMouseUp()}
+      onMouseUp={() => onMouseUp(row, col)}
     >
       {weight === 0 ? <span>&#8203;</span> : weight}
     </div>
