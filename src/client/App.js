@@ -55,6 +55,18 @@ const App = () => {
       .classList.contains("wall");
   };
 
+  const isStart = (row, col) => {
+    return document
+      .querySelector(`#node-${row}-${col}`)
+      .classList.contains("starting-node");
+  };
+
+  const isEnd = (row, col) => {
+    return document
+      .querySelector(`#node-${row}-${col}`)
+      .classList.contains("ending-node");
+  };
+
   const makeWeight = (row, col) => {
     const newArray = [...board];
     if (newArray[row][col].isWall) {
@@ -90,10 +102,12 @@ const App = () => {
   };
 
   const onMouseDown = (row, col) => {
-    if (!board[row][col].isStart && !board[row][col].isEnd) {
+    if (!isStart(row, col) && !isEnd(row, col)) {
       setAddWalls(true);
       if (isWall(row, col)) setRemoveWalls(true);
       else setRemoveWalls(false);
+    } else {
+      setStart([row, col]);
     }
     setMouseDown(true);
   };
@@ -103,7 +117,14 @@ const App = () => {
     if (addWalls) {
       makeWall(row, col);
     } else {
-      console.log(row, col);
+      if (isWall(row, col)) return;
+      document
+        .querySelector(`#node-${start[0]}-${start[1]}`)
+        .classList.remove("starting-node");
+      setStart([row, col]);
+      document
+        .querySelector(`#node-${row}-${col}`)
+        .classList.add("starting-node");
     }
   };
 
