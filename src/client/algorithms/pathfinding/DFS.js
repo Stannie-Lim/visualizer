@@ -23,14 +23,13 @@ const getPath = (_board, start) => {
 
   const startingNode = board[start[0]][start[1]];
 
-  const queue = [startingNode];
+  const stack = [startingNode];
 
-  while (queue.length) {
-    const node = queue.pop();
+  while (stack.length) {
+    const node = stack.pop();
     const { row, col, isEnd, isWall, visited } = node;
     if (
       visited ||
-      isWall ||
       document.querySelector(`#node-${row}-${col}`).classList.contains("wall")
     )
       continue;
@@ -42,7 +41,7 @@ const getPath = (_board, start) => {
     const neighbors = getAdjacents(board, row, col);
     for (const neighbor of neighbors) {
       neighbor.previous = node;
-      queue.push(neighbor);
+      stack.push(neighbor);
     }
   }
 

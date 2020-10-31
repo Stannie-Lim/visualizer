@@ -40,7 +40,6 @@ const getPath = (_board, [startRow, startCol], [endRow, endCol]) => {
     const closest = unvisited.shift();
     const { row, col } = closest;
     if (
-      closest.isWall ||
       document.querySelector(`#node-${row}-${col}`).classList.contains("wall")
     )
       continue;

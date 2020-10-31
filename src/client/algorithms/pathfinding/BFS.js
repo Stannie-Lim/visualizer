@@ -30,7 +30,6 @@ const getPath = (_board, start) => {
     const { row, col, isEnd, isWall, visited } = node;
     if (
       visited ||
-      isWall ||
       document.querySelector(`#node-${row}-${col}`).classList.contains("wall")
     )
       continue;

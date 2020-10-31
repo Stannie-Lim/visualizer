@@ -52,9 +52,16 @@ const App = () => {
       isEnd(row, col)
     )
       return;
-    if (removeWalls)
+
+    const _board = [...board];
+    if (removeWalls) {
       document.querySelector(`#node-${row}-${col}`).classList.remove("wall");
-    else document.querySelector(`#node-${row}-${col}`).classList.add("wall");
+      _board[row][col].isWall = false;
+    } else {
+      document.querySelector(`#node-${row}-${col}`).classList.add("wall");
+      _board[row][col].isWall = true;
+    }
+    setBoard(board);
   };
 
   const isWall = (row, col) => {
@@ -142,6 +149,7 @@ const App = () => {
     if (addWalls) {
       setAddWalls(false);
     } else if (isMovingStart) {
+      console.log(1);
       const _board = [...board];
       _board[row][col].isStart = true;
       _board[previousStart[0]][previousStart[1]].isStart = false;
